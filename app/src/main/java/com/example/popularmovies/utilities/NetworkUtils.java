@@ -17,7 +17,7 @@ public final class NetworkUtils {
     private static final String STATIC_MOIVES_URL = "https://api.themoviedb.org/3/search/movie?";
     final static String QUERY_PARAM = "query";
     final static String API_KEY_path = "api_key";
-    final static String API_KEY = "b640aea96524ead852f99db7104962de";
+    final static String API_KEY = "";
 
 
     public static URL buildUrl(String movieQuery) {
