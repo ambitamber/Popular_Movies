@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,12 +13,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.popularmovies.model.Movie;
 import com.example.popularmovies.utilities.MovieJsonUtils;
 import com.example.popularmovies.utilities.NetworkUtils;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
@@ -48,14 +47,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
     private void loadWeatherData() {
         showMovieDataView();
-        new FetchMovieTask().execute("popular");
-    }
-
-    @Override
-    public void onClick(String eachMovie) {
-        Context context = this;
-        Toast.makeText(context, eachMovie, Toast.LENGTH_SHORT)
-                .show();
+        new FetchMovieTask().execute("spider");
     }
 
     private void showMovieDataView() {
@@ -72,7 +64,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    public class FetchMovieTask extends AsyncTask<String,Void,String[]>{
+    @Override
+    public void onClick(String title, String rating) {
+        Context context = this;
+        String all = title + " - " + rating;
+        Toast.makeText(context,all , Toast.LENGTH_SHORT).show();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public class FetchMovieTask extends AsyncTask<String,Void,Movie[]>{
 
         @Override
         protected void onPreExecute() {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
 
         @Override
-        protected String[] doInBackground(String... strings) {
+        protected Movie[] doInBackground(String... strings) {
 
             if (strings.length == 0){
                 return null;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
             try {
                 String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
-                String[] simpleJsonWeatherData = MovieJsonUtils.getSimpleMovieStringFromJson(MainActivity.this, jsonMovieResponse);
+                Movie[] simpleJsonWeatherData = MovieJsonUtils.getSimpleMovieStringFromJson(MainActivity.this, jsonMovieResponse);
                 return simpleJsonWeatherData;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
 
         @Override
-        protected void onPostExecute(String[] strings) {
+        protected void onPostExecute(Movie[] movies) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
-            if (strings != null) {
+            if (movies != null) {
                 showMovieDataView();
-                mMovieAdapter.setmMovieData(strings);
+                mMovieAdapter.setmMovieData(movies);
             } else {
                 showErrorMessage();
             }

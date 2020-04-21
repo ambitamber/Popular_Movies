@@ -15,9 +15,9 @@ public final class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private static final String STATIC_MOIVES_URL = "https://api.themoviedb.org/3/search/movie?";
-    final static String QUERY_PARAM = "query";
-    final static String API_KEY_path = "api_key";
-    final static String API_KEY = "";
+    private final static String QUERY_PARAM = "query";
+    private final static String API_KEY_path = "api_key";
+    private final static String API_KEY = "";
 
 
     public static URL buildUrl(String movieQuery) {
