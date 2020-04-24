@@ -42,25 +42,8 @@ public final class MovieJsonUtils {
                 movieData[eachMovie] = movie;
             }
         }catch (JSONException e){
-            Log.e("MovieJsonUtils", "Problem parsing the JSON data", e);
+            Log.e(LOG_TAG, "Problem parsing the JSON data", e);
         }
         return movieData;
-    }
-    private static String dateTime(String t){
-        PrettyTime prettyTime = new PrettyTime(new Locale(getCountry()));
-        String time = null;
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:", Locale.ENGLISH);
-            Date date = simpleDateFormat.parse(t);
-            time = prettyTime.format(date);
-        }catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return time;
-    }
-    private static String getCountry(){
-        Locale locale = Locale.getDefault();
-        String country = locale.getCountry();
-        return country.toLowerCase();
     }
 }

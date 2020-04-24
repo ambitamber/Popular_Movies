@@ -1,13 +1,19 @@
 package com.example.popularmovies;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mMovieAdapter;
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
+    private Movie[] mMovie = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +40,20 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mRecyclerView = findViewById(R.id.recyclerview_movie);
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
-
+        mMovieAdapter = new MovieAdapter(this);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-
-        mMovieAdapter = new MovieAdapter(this);
         mRecyclerView.setAdapter(mMovieAdapter);
 
-        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
-
-        loadWeatherData();
+        loadWeatherData("top_rated");
+        setTitle("Top Rated Movies");
     }
-    private void loadWeatherData() {
+    private void loadWeatherData(String word) {
         showMovieDataView();
-        new FetchMovieTask().execute("spider");
+        new FetchMovieTask().execute(word);
     }
 
     private void showMovieDataView() {
@@ -64,12 +70,20 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onClick(String title, String rating) {
-        Context context = this;
-        String all = title + " - " + rating;
-        Toast.makeText(context,all , Toast.LENGTH_SHORT).show();
+    public void onClick(String title,String plot,String releasedate,String rating,String imageposter) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("rating",rating);
+        intent.putExtra("image",imageposter);
+        intent.putExtra("plot",plot);
+        intent.putExtra("releasedate",releasedate);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        Toast.makeText(this,title,Toast.LENGTH_SHORT).show();
     }
+
 
     @SuppressLint("StaticFieldLeak")
     public class FetchMovieTask extends AsyncTask<String,Void,Movie[]>{
@@ -109,5 +123,23 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 showErrorMessage();
             }
         }
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.most_populor:
+                loadWeatherData("popular");
+                setTitle("Popular Movies");
+                return true;
+            case R.id.highest_rated:
+                loadWeatherData("top_rated");
+                setTitle("Top Rated Movies");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
