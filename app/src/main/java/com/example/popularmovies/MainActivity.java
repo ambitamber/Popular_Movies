@@ -3,12 +3,10 @@ package com.example.popularmovies;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -50,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
 
-        loadWeatherData("top_rated");
+        loadMovieData("top_rated");
         setTitle("Top Rated Movies");
     }
-    private void loadWeatherData(String word) {
+    private void loadMovieData(String word) {
         showMovieDataView();
         new FetchMovieTask().execute(word);
     }
@@ -134,11 +132,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.most_populor:
-                loadWeatherData("popular");
+                loadMovieData("popular");
                 setTitle("Popular Movies");
                 return true;
             case R.id.highest_rated:
-                loadWeatherData("top_rated");
+                loadMovieData("top_rated");
                 setTitle("Top Rated Movies");
                 return true;
         }
