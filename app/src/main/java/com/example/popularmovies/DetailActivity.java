@@ -11,15 +11,23 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
 
     //Link for server to get Image.
     private static final String BASE_URL_IMAGE = "http://image.tmdb.org/t/p/w500";
     //Giving name for ImageView and TextView
+    @BindView(R.id.moviePoster_IV)
     ImageView poster_IV;
+    @BindView(R.id.movieTitle_TV)
     TextView title_TV;
+    @BindView(R.id.moviePlot_TV)
     TextView plot_TV;
+    @BindView(R.id.movieReleasedate_TV)
     TextView releasedate_TV;
+    @BindView(R.id.movieRating_TV)
     TextView rating_TV;
 
     //This is to get information from MainActivity using Intents
@@ -28,14 +36,14 @@ public class DetailActivity extends AppCompatActivity {
     String releasedate = null;
     String rating = null;
     String poster = null;
-    DateTime dateTime;
+    FormatDate formatDate;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
+        ButterKnife.bind(this);
         poster_IV = findViewById(R.id.moviePoster_IV);
         title_TV = findViewById(R.id.movieTitle_TV);
         plot_TV = findViewById(R.id.moviePlot_TV);
@@ -55,11 +63,11 @@ public class DetailActivity extends AppCompatActivity {
 
         title_TV.setText(title);
         plot_TV.setText(plot);
-        dateTime = new DateTime();
-        releasedate_TV.setText("Release Date: "+dateTime.dateTime(releasedate));
+        formatDate = new FormatDate();
+        releasedate_TV.setText("Release Date: "+ formatDate.dateTime(releasedate));
         rating_TV.setText("Rating: "+rating);
         Picasso.get()
-                .load(BASE_URL_IMAGE+poster).
+                .load(BASE_URL_IMAGE + poster).
                 into(poster_IV, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {

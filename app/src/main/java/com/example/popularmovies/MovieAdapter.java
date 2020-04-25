@@ -20,7 +20,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     private static final String TAG = MovieAdapter.class.getSimpleName();
     private Movie[] mMovieData;
     private static final String BASE_URL_IMAGE = "http://image.tmdb.org/t/p/w500";
-    DateTime dateTime;
+    FormatDate formatDate;
 
     private final MovieAdapterOnClickHandler mClickHandler;
 
@@ -77,8 +77,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         //To view Movie Rating into TextView
         String rating = mMovieData[position].getMovieRating();
         holder.mRatingTV.setText("Rating: " + rating);
-        dateTime = new DateTime();
-        String releasedate = dateTime.dateTime(mMovieData[position].getMovieRelease());
+        formatDate = new FormatDate();
+        String releasedate = formatDate.dateTime(mMovieData[position].getMovieRelease());
         holder.mReleasedateTV.setText(releasedate);
         //To view Movie Poster into Imageview
         final String imagePath = BASE_URL_IMAGE + mMovieData[position].getMovieImagePoster();

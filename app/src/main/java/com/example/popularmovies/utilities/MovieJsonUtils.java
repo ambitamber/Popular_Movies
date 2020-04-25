@@ -21,7 +21,7 @@ public final class MovieJsonUtils {
 
     private static final String LOG_TAG = MovieJsonUtils.class.getSimpleName();
 
-    public static Movie[] getSimpleMovieStringFromJson(Context context, String movieJsonStr) throws JSONException {
+    public static Movie[] getSimpleMovieStringFromJson(String movieJsonStr) throws JSONException {
 
         if (TextUtils.isEmpty(movieJsonStr)){
             return null;
