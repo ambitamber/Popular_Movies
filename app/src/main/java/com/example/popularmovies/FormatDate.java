@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateTime {
+public class FormatDate {
     public String dateTime(String movieDate) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat inSDF = new SimpleDateFormat("yyyy-mm-dd");
         @SuppressLint("SimpleDateFormat") SimpleDateFormat outSDF = new SimpleDateFormat("mm/dd/yyyy");

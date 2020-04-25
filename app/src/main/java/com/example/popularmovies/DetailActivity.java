@@ -28,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
     String releasedate = null;
     String rating = null;
     String poster = null;
-    DateTime dateTime;
+    FormatDate formatDate;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -55,11 +55,11 @@ public class DetailActivity extends AppCompatActivity {
 
         title_TV.setText(title);
         plot_TV.setText(plot);
-        dateTime = new DateTime();
-        releasedate_TV.setText("Release Date: "+dateTime.dateTime(releasedate));
+        formatDate = new FormatDate();
+        releasedate_TV.setText("Release Date: "+ formatDate.dateTime(releasedate));
         rating_TV.setText("Rating: "+rating);
         Picasso.get()
-                .load(BASE_URL_IMAGE+poster).
+                .load(BASE_URL_IMAGE + poster).
                 into(poster_IV, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {

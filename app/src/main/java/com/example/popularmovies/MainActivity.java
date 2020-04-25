@@ -2,6 +2,7 @@ package com.example.popularmovies;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,9 +43,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mMovieAdapter = new MovieAdapter(this);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        //Charged to GridLayoutManager
+        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
 
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
 
