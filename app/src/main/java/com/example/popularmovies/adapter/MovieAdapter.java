@@ -1,4 +1,4 @@
-package com.example.popularmovies;
+package com.example.popularmovies.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.popularmovies.FormatDate;
+import com.example.popularmovies.R;
 import com.example.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -20,11 +22,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     private static final String TAG = MovieAdapter.class.getSimpleName();
     private Movie[] mMovieData;
     private static final String BASE_URL_IMAGE = "http://image.tmdb.org/t/p/w500";
-    FormatDate formatDate;
+
 
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    interface MovieAdapterOnClickHandler {
+    public interface MovieAdapterOnClickHandler {
         void onClick(String title,String plot,String releasedate,String rating,String imageposter);
     }
 
@@ -77,8 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         //To view Movie Rating into TextView
         String rating = mMovieData[position].getMovieRating();
         holder.mRatingTV.setText("Rating: " + rating);
-        formatDate = new FormatDate();
-        String releasedate = formatDate.dateTime(mMovieData[position].getMovieRelease());
+        String releasedate = FormatDate.dateTime(mMovieData[position].getMovieRelease());
         holder.mReleasedateTV.setText(releasedate);
         //To view Movie Poster into Imageview
         final String imagePath = BASE_URL_IMAGE + mMovieData[position].getMovieImagePoster();

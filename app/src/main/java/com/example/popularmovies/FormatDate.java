@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FormatDate {
-    public String dateTime(String movieDate) {
+    public static String dateTime(String movieDate) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat inSDF = new SimpleDateFormat("yyyy-mm-dd");
         @SuppressLint("SimpleDateFormat") SimpleDateFormat outSDF = new SimpleDateFormat("mm/dd/yyyy");
         String outDate = "";

@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.popularmovies.adapter.MovieAdapter;
 import com.example.popularmovies.model.Movie;
 import com.example.popularmovies.utilities.MovieJsonUtils;
 import com.example.popularmovies.utilities.NetworkUtils;

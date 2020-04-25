@@ -36,4 +36,6 @@ dependencies {
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:8.8.1'
 }
