@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.popularmovies.adapter.MovieAdapter;
 import com.example.popularmovies.model.Movie;
+import com.example.popularmovies.utilities.Constants;
 import com.example.popularmovies.utilities.MovieJsonUtils;
 import com.example.popularmovies.utilities.NetworkUtils;
 
@@ -76,11 +77,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     public void onClick(String title,String plot,String releasedate,String rating,String imageposter) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("rating",rating);
-        intent.putExtra("image",imageposter);
-        intent.putExtra("plot",plot);
-        intent.putExtra("releasedate",releasedate);
+        intent.putExtra(Constants.intent_TITLE, title);
+        intent.putExtra(Constants.intent_Rating,rating);
+        intent.putExtra(Constants.intent_IMAGE,imageposter);
+        intent.putExtra(Constants.intent_PLOT,plot);
+        intent.putExtra(Constants.intent_RELEASEDATE,releasedate);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         Toast.makeText(this,title,Toast.LENGTH_SHORT).show();
     }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.popularmovies.utilities.Constants;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -36,7 +37,6 @@ public class DetailActivity extends AppCompatActivity {
     String releasedate = null;
     String rating = null;
     String poster = null;
-    FormatDate formatDate;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -54,17 +54,16 @@ public class DetailActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         if (bundle != null){
-            title = bundle.getString("title");
-            plot = bundle.getString("plot");
-            releasedate = bundle.getString("releasedate");
-            rating = bundle.getString("rating");
-            poster = bundle.getString("image");
+            title = bundle.getString(Constants.intent_TITLE);
+            plot = bundle.getString(Constants.intent_PLOT);
+            releasedate = bundle.getString(Constants.intent_RELEASEDATE);
+            rating = bundle.getString(Constants.intent_Rating);
+            poster = bundle.getString(Constants.intent_IMAGE);
         }
 
         title_TV.setText(title);
         plot_TV.setText(plot);
-        formatDate = new FormatDate();
-        releasedate_TV.setText("Release Date: "+ formatDate.dateTime(releasedate));
+        releasedate_TV.setText("Release Date: "+ FormatDate.dateTime(releasedate));
         rating_TV.setText("Rating: "+rating);
         Picasso.get()
                 .load(BASE_URL_IMAGE + poster).

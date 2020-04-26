@@ -14,18 +14,12 @@ public final class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    private static final String STATIC_MOIVES_URL = "https://api.themoviedb.org/3/movie/";
-    private final static String MOVIE_API_KEY = "api_key";
-    private final static String API_KEY = "b640aea96524ead852f99db7104962de";
-    private final static String MOVIE_LANGUAGE = "language";
-    private final static String LANGUAGE = "en-us";
-
     public static URL buildUrl(String movieURL) {
-        Uri builtUri = Uri.parse(STATIC_MOIVES_URL)
+        Uri builtUri = Uri.parse(Constants.STATIC_MOIVES_URL)
                 .buildUpon()
                 .appendPath(movieURL)
-                .appendQueryParameter(MOVIE_API_KEY, API_KEY)
-                .appendQueryParameter(MOVIE_LANGUAGE,LANGUAGE)
+                .appendQueryParameter(Constants.MOVIE_API_KEY, Constants.API_KEY)
+                .appendQueryParameter(Constants.MOVIE_LANGUAGE,Constants.LANGUAGE)
                 .build();
 
         URL url = null;
