@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Movie implements Parcelable {
+    private String movieID;
     private String movieTitle;
     private String movieRelease;
     private String movieImagePoster;
@@ -16,6 +17,7 @@ public class Movie implements Parcelable {
         movieImagePoster = in.readString();
         moviePlot = in.readString();
         movieRating = in.readString();
+        movieID = in.readString();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -30,12 +32,22 @@ public class Movie implements Parcelable {
         }
     };
 
-    public Movie(String mMovieTitle, String mMovieRelease, String mMovieImagePoster,String mMoviePlot,String mMovieRating) {
+
+    public Movie(String Id,String mMovieTitle, String mMovieRelease, String mMovieImagePoster,String mMoviePlot,String mMovieRating) {
+        this.movieID = Id;
         this.movieTitle = mMovieTitle;
         this.movieRelease = mMovieRelease;
         this.movieImagePoster = mMovieImagePoster;
         this.moviePlot = mMoviePlot;
         this.movieRating = mMovieRating;
+    }
+
+    //Movie ID
+    public String getId() {
+        return movieID;
+    }
+    public void setId(String id) {
+        this.movieTitle = id;
     }
 
     //For Movie Title

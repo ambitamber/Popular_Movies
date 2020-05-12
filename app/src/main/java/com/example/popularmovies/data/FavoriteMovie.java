@@ -14,6 +14,7 @@ public class FavoriteMovie {
     private String image;
 
 
+    public FavoriteMovie(){}
 
 
     public FavoriteMovie(int id, String title, String releaseDate, String vote, String synopsis, String image) {
@@ -25,8 +26,6 @@ public class FavoriteMovie {
         this.plot = synopsis;
         this.image = image;
     }
-
-
 
     public int getId() {
         return id;
@@ -49,24 +48,20 @@ public class FavoriteMovie {
         this.releaseDate = releaseDate;
     }
 
-
-
-    public String getVote() {
+    public String getRating() {
         return rating;
     }
-    public void setVote(String vote) {
-        this.rating = vote;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
-
-    public String getSynopsis() {
+    public String getPlot() {
         return plot;
 
     }
-    public void setSynopsis(String synopsis) {
-        this.plot = synopsis;
+    public void setPlot(String plot) {
+        this.plot = plot;
     }
-
 
     public String getImage() {
         return image;

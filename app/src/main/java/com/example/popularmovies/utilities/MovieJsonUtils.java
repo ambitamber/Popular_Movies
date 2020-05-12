@@ -30,12 +30,13 @@ public final class MovieJsonUtils {
 
             for (int eachMovie = 0; eachMovie < jsonArray.length(); eachMovie++){
                 JSONObject currentMovie = jsonArray.getJSONObject(eachMovie);
+                String id = currentMovie.optString("id");
                 String title = currentMovie.optString(Constants.movie_Title);
                 String rating = currentMovie.optString(Constants.movie_Rating);
                 String image = currentMovie.getString(Constants.movie_PosterImage);
                 String plot = currentMovie.optString(Constants.movie_Plot);
                 String release = currentMovie.optString(Constants.movie_Release);
-                Movie movie = new Movie(title,release,image,plot,rating);
+                Movie movie = new Movie(id,title,release,image,plot,rating);
                 movieData.add(movie);
             }
         }catch (JSONException e){
