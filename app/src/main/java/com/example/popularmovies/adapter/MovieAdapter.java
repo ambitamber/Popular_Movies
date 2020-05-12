@@ -20,6 +20,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     private static final String TAG = MovieAdapter.class.getSimpleName();
     private List<Movie> mMovieData;
+    private final Context context;
     private static final String BASE_URL_IMAGE = "http://image.tmdb.org/t/p/w500";
 
 
@@ -29,8 +30,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         void onClick(Movie movie);
     }
 
-    public MovieAdapter( MovieAdapterOnClickHandler mClickHandler) {
+    public MovieAdapter(MovieAdapterOnClickHandler mClickHandler,Context context,List<Movie> movieItemList) {
         this.mClickHandler = mClickHandler;
+        this.context = context;
+        this.mMovieData = movieItemList;
     }
 
     public class MovieAdapterVieweHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

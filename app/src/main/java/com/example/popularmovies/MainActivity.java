@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.popularmovies.adapter.MovieAdapter;
+import com.example.popularmovies.data.FavoriteMovie;
 import com.example.popularmovies.model.Movie;
 import com.example.popularmovies.utilities.Constants;
 import com.example.popularmovies.utilities.MovieJsonUtils;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
     private ArrayList<Movie> mMovie;
+    private List<FavoriteMovie> favMovs;
+    private static final String SORT_POPULAR = "popular";
+    private static String currentSort = SORT_POPULAR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +50,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mRecyclerView = findViewById(R.id.recyclerview_movie);
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
-        mMovieAdapter = new MovieAdapter(this);
+        mMovieAdapter = new MovieAdapter(this,this,mMovie);
+
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
         //GridLayoutManager
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
+
+        favMovs = new ArrayList<FavoriteMovie>();
 
         loadMovieData("top_rated");
         setTitle("Top Rated Movies");
