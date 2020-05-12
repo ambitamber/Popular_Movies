@@ -18,11 +18,8 @@ public class Constants {
     public final static String MOVIE_LANGUAGE = "language";
     public final static String LANGUAGE = "en-us";
 
-    //Use for Intent passing data
-    public final static String intent_TITLE = "title";
-    public final static String intent_Rating = "rating";
-    public final static String intent_IMAGE = "image";
-    public final static String intent_PLOT = "plot";
-    public final static String intent_RELEASEDATE = "releasedate";
-
+    //Use for MainAcitivty - SearchQuery
+    public static final String SORT_TOP_RATED = "top_rated";
+    public static final String SORT_FAVORITE = "favorite";
+    public static final String SORT_POPULAR = "popular";
 }

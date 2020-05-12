@@ -2,6 +2,8 @@ package com.example.popularmovies;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,12 +13,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.popularmovies.adapter.MovieAdapter;
 import com.example.popularmovies.data.FavoriteMovie;
@@ -24,8 +26,7 @@ import com.example.popularmovies.model.Movie;
 import com.example.popularmovies.utilities.Constants;
 import com.example.popularmovies.utilities.MovieJsonUtils;
 import com.example.popularmovies.utilities.NetworkUtils;
-
-import org.json.JSONException;
+import com.example.popularmovies.viewmodel.MainViewModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private ProgressBar mLoadingIndicator;
     private ArrayList<Movie> mMovie;
     private List<FavoriteMovie> favMovs;
-    private static final String SORT_POPULAR = "popular";
+    private static final String SORT_POPULAR = Constants.SORT_POPULAR;
     private static String currentSort = SORT_POPULAR;
 
     @Override
@@ -61,13 +62,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         favMovs = new ArrayList<FavoriteMovie>();
 
-        loadMovieData("top_rated");
-        setTitle("Top Rated Movies");
-    }
-    private void loadMovieData(String word) {
-        showMovieDataView();
-        URL query = NetworkUtils.buildUrl(word);
-        new FetchMovieTask().execute(query);
+
+        getViewModel();
     }
 
     private void showMovieDataView() {
@@ -132,22 +128,84 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
         }
     }
+
+    private void getViewModel(){
+        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mainViewModel.getMovies().observe(this, new Observer<List<FavoriteMovie>>() {
+            @Override
+            public void onChanged(List<FavoriteMovie> favoriteMovies) {
+                if (favoriteMovies.size() > 0){
+                    favMovs.clear();
+                    favMovs = favoriteMovies;
+                }
+                for (int i = 0; i < favMovs.size(); i++){
+                    Log.d("MainActivity: ",favMovs.get(i).getTitle());
+                }
+                searchQuery();
+            }
+        });
+    }
+
+    private void searchQuery() {
+        if (currentSort.equals(Constants.SORT_FAVORITE)){
+            ClearItemList();
+            for (int i = 0; i < favMovs.size(); i++){
+                Movie movie = new Movie(
+                        String.valueOf(favMovs.get(i).getId()),
+                        favMovs.get(i).getTitle(),
+                        favMovs.get(i).getReleaseDate(),
+                        favMovs.get(i).getRating(),
+                        favMovs.get(i).getPlot(),
+                        favMovs.get(i).getImage()
+                );
+                mMovie.add(movie);
+            }
+            mMovieAdapter.setmMovieData(mMovie);
+        }else {
+            String movieQuery = currentSort;
+
+            URL movieSearchUrl = NetworkUtils.buildUrl(movieQuery);
+
+            new FetchMovieTask().execute(movieSearchUrl);
+        }
+    }
+
+    private void ClearItemList() {
+        if (mMovie != null) {
+            mMovie.clear();
+        } else {
+            mMovie = new ArrayList<Movie>();
+        }
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.most_populor:
-                loadMovieData("popular");
-                setTitle("Popular Movies");
-                return true;
-            case R.id.highest_rated:
-                loadMovieData("top_rated");
-                setTitle("Top Rated Movies");
-                return true;
+
+        int id = item.getItemId();
+        if (id == R.id.most_populor && !currentSort.equals(SORT_POPULAR)){
+            ClearItemList();
+            currentSort = SORT_POPULAR;
+            setTitle("Popular Movies");
+            searchQuery();
+            return true;
+        } else if (id == R.id.highest_rated && !currentSort.equals(Constants.SORT_TOP_RATED)){
+            ClearItemList();
+            currentSort = Constants.SORT_TOP_RATED;
+            setTitle("Top Rated Movies");
+            searchQuery();
+            return true;
+        } else if (id == R.id.favorite && !currentSort.equals(Constants.SORT_FAVORITE)){
+            ClearItemList();
+            currentSort = Constants.SORT_FAVORITE;
+            setTitle("Favorite Movies");
+            searchQuery();
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 }
