@@ -32,12 +32,16 @@ dependencies {
 
     //Recyclerview
     implementation "androidx.recyclerview:recyclerview:1.1.0"
-    //Date/Time
-    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     //ButterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
-    //Design for cardview
+    //Design for Material - cardview
     implementation 'com.google.android.material:material:1.1.0'
+    //Room
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+    //Lifecycle
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
 }

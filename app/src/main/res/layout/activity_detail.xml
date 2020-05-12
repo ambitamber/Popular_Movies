@@ -14,60 +14,62 @@
 
         <ImageView
             android:id="@+id/moviePoster_IV"
-            android:layout_width="233dp"
-            android:layout_height="309dp"
+            android:layout_width="190dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
             android:contentDescription="Movie Image"
             android:src="@drawable/spiderman"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/movieTitle_TV"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:text="Movie Title"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/moviePoster_IV" />
+            app:layout_constraintStart_toEndOf="@+id/moviePoster_IV"
+            app:layout_constraintTop_toTopOf="@+id/moviePoster_IV" />
 
         <TextView
             android:id="@+id/movieReleasedate_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="Release Date"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/movieTitle_TV"
             app:layout_constraintTop_toBottomOf="@+id/movieTitle_TV" />
 
         <TextView
             android:id="@+id/movieRating_TV"
             android:layout_width="85dp"
             android:layout_height="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginTop="5dp"
             android:text="Movie Rating"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieTitle_TV" />
+            app:layout_constraintStart_toStartOf="@+id/movieReleasedate_TV"
+            app:layout_constraintTop_toBottomOf="@+id/movieReleasedate_TV" />
 
         <TextView
             android:id="@+id/moviePlot_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
             android:text="Movie Plot"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieTitle_TV" />
+            app:layout_constraintTop_toBottomOf="@+id/moviePoster_IV" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="ToggleButton"
+            app:layout_constraintStart_toStartOf="@+id/movieRating_TV"
+            app:layout_constraintTop_toBottomOf="@+id/movieRating_TV" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

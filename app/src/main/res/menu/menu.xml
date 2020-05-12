@@ -10,4 +10,9 @@
         android:id="@+id/highest_rated"
         android:icon="@drawable/sort_black"
         android:title="Top Rated" />
+
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/sort_black"
+        android:title="Favorite" />
 </menu>

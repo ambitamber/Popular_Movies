@@ -33,13 +33,14 @@ public class DetailActivity extends AppCompatActivity {
     TextView rating_TV;
 
     //This is to get information from MainActivity using Intents
-    Movie movie;
+    private Movie movie;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         ButterKnife.bind(this);
         poster_IV = findViewById(R.id.moviePoster_IV);
         title_TV = findViewById(R.id.movieTitle_TV);
