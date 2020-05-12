@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.popularmovies.model.Movie;
-import com.example.popularmovies.utilities.Constants;
+import com.example.popularmovies.utilities.FormatDate;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
