@@ -3,7 +3,9 @@ package com.example.popularmovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Movie implements Parcelable {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
     private String movieID;
     private String movieTitle;
     private String movieRelease;
@@ -20,17 +22,6 @@ public class Movie implements Parcelable {
         movieID = in.readString();
     }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
 
 
     public Movie(String Id,String mMovieTitle, String mMovieRelease, String mMovieImagePoster,String mMoviePlot,String mMovieRating) {
@@ -90,17 +81,4 @@ public class Movie implements Parcelable {
         return movieRating;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(movieTitle);
-        dest.writeString(movieRelease);
-        dest.writeString(movieImagePoster);
-        dest.writeString(moviePlot);
-        dest.writeString(movieRating);
-    }
 }

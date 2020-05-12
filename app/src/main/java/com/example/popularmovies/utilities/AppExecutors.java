@@ -5,38 +5,38 @@ import android.os.Handler;
 import android.os.Looper;
 
 import java.util.concurrent.Executor;
-
+import java.util.concurrent.Executors;
 
 
 import androidx.annotation.NonNull;
 
-public class Executors {
+public class AppExecutors {
 
     private static final Object LOCK = new Object();
-    private static Executors sInstance;
+    private static AppExecutors sInstance;
     private final Executor diskIO;
     private final Executor mainThread;
     private final Executor networkIO;
 
-    private Executors(Executor diskIO, Executor networkIO, Executor mainThread) {
+    private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
         this.diskIO = diskIO;
         this.mainThread = mainThread;
         this.networkIO = networkIO;
     }
 
-    public static Executors getInstance(){
+    public static AppExecutors getInstance(){
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new Executors(java.util.concurrent.Executors.newSingleThreadExecutor(),
-                        java.util.concurrent.Executors.newFixedThreadPool(3),
+                sInstance = new AppExecutors(Executors.newSingleThreadExecutor(),
+                        Executors.newFixedThreadPool(3),
                         new MainThreadExecutor());
             }
         }
         return sInstance;
     }
 
-    public Executors disIO(){
-        return (Executors) diskIO;
+    public Executor diskIO(){
+        return diskIO;
     }
 
     public Executor mainThread() {

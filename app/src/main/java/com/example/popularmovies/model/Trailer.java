@@ -6,11 +6,11 @@ public class Trailer {
     private String key;
     private String url;
 
-    public Trailer(String name, String site,String key, String url){
+    public Trailer(String name, String site,String key){
         this.name = name;
         this.site = site;
         this.key = key;
-        this.url = url;
+        this.url = "https://www.youtube.com/watch?v=" + key;
     }
 
     public String getName() {

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
 
-        favMovs = new ArrayList<FavoriteMovie>();
+        favMovs = new ArrayList<>();
 
 
         getViewModel();
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private void searchQuery() {
         if (currentSort.equals(Constants.SORT_FAVORITE)){
-            ClearItemList();
+            clearList();
             for (int i = 0; i < favMovs.size(); i++){
                 Movie movie = new Movie(
                         String.valueOf(favMovs.get(i).getId()),
@@ -162,19 +162,17 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
             mMovieAdapter.setmMovieData(mMovie);
         }else {
-            String movieQuery = currentSort;
-
-            URL movieSearchUrl = NetworkUtils.buildUrl(movieQuery);
-
-            new FetchMovieTask().execute(movieSearchUrl);
+            String query = currentSort;
+            URL searchUrl = NetworkUtils.buildUrl(query);
+            new FetchMovieTask().execute(searchUrl);
         }
     }
 
-    private void ClearItemList() {
+    private void clearList() {
         if (mMovie != null) {
             mMovie.clear();
         } else {
-            mMovie = new ArrayList<Movie>();
+            mMovie = new ArrayList<>();
         }
     }
 
@@ -187,19 +185,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         int id = item.getItemId();
         if (id == R.id.most_populor && !currentSort.equals(SORT_POPULAR)){
-            ClearItemList();
+            clearList();
             currentSort = SORT_POPULAR;
             setTitle("Popular Movies");
             searchQuery();
             return true;
         } else if (id == R.id.highest_rated && !currentSort.equals(Constants.SORT_TOP_RATED)){
-            ClearItemList();
+            clearList();
             currentSort = Constants.SORT_TOP_RATED;
             setTitle("Top Rated Movies");
             searchQuery();
             return true;
         } else if (id == R.id.favorite && !currentSort.equals(Constants.SORT_FAVORITE)){
-            ClearItemList();
+            clearList();
             currentSort = Constants.SORT_FAVORITE;
             setTitle("Favorite Movies");
             searchQuery();

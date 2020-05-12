@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.popularmovies.model.Movie;
+import com.example.popularmovies.model.Review;
+import com.example.popularmovies.model.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,5 +45,57 @@ public final class MovieJsonUtils {
             Log.e(LOG_TAG, "Problem parsing the JSON data", e);
         }
         return movieData;
+    }
+
+    public static ArrayList<Review> getSimpleReviewStringFromJson(String reviewJsonStr) {
+
+        try {
+            Review review;
+            JSONObject json_object = new JSONObject(reviewJsonStr);
+            JSONArray resultsArray = new JSONArray(json_object.optString("results","[\"\"]"));
+            ArrayList<Review> reviewitems = new ArrayList<>();
+
+            for (int i = 0; i < resultsArray.length(); i++) {
+                String thisitem = resultsArray.optString(i, "");
+                JSONObject movieJson = new JSONObject(thisitem);
+
+                review = new Review(
+                        movieJson.optString("author","Not Available"),
+                        movieJson.optString("content","Not Available"),
+                        movieJson.optString("id","Not Available"),
+                        movieJson.optString("url","Not Available")
+                );
+                reviewitems.add(review);
+            }
+            return reviewitems;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+            return null;
+    }
+
+    public static ArrayList<Trailer> getSimpleTrailerStringFromJson(String trailerJsonStr){
+        try {
+            Trailer trailer;
+            JSONObject json_object = new JSONObject(trailerJsonStr);
+            JSONArray resultsArray = new JSONArray(json_object.optString("results","[\"\"]"));
+            ArrayList<Trailer> trailers = new ArrayList<>();
+            for (int i = 0; i < resultsArray.length(); i++) {
+
+                String thisitem = resultsArray.optString(i, "");
+                JSONObject movieJson = new JSONObject(thisitem);
+
+                trailer = new Trailer(
+                        movieJson.optString("name","Not Available"),
+                        movieJson.optString("site","Not Available"),
+                        movieJson.optString("key","Not Available")
+                );
+                trailers.add(trailer);
+            }
+            return trailers;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -53,6 +53,11 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         }
         return trailers.size();
     }
+    public void setTrailerData(List<Trailer> trailerItemList) {
+        trailers = trailerItemList;
+        notifyDataSetChanged();
+
+    }
 
     public class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

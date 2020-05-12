@@ -17,13 +17,13 @@ public class FavoriteMovie {
     public FavoriteMovie(){}
 
 
-    public FavoriteMovie(int id, String title, String releaseDate, String vote, String synopsis, String image) {
+    public FavoriteMovie(int id, String title, String releaseDate, String rating, String plot, String image) {
 
         this.id = id;
         this.title = title;
         this.releaseDate = releaseDate;
-        this.rating = vote;
-        this.plot = synopsis;
+        this.rating = rating;
+        this.plot = plot;
         this.image = image;
     }
 
