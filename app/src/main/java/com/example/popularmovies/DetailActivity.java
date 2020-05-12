@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.popularmovies.model.Movie;
 import com.example.popularmovies.utilities.Constants;
 import com.squareup.picasso.Picasso;
 
@@ -32,11 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView rating_TV;
 
     //This is to get information from MainActivity using Intents
-    String title = null;
-    String plot = null;
-    String releasedate = null;
-    String rating = null;
-    String poster = null;
+    Movie movie;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -51,22 +48,20 @@ public class DetailActivity extends AppCompatActivity {
         rating_TV = findViewById(R.id.movieRating_TV);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-
-        if (bundle != null){
-            title = bundle.getString(Constants.intent_TITLE);
-            plot = bundle.getString(Constants.intent_PLOT);
-            releasedate = bundle.getString(Constants.intent_RELEASEDATE);
-            rating = bundle.getString(Constants.intent_Rating);
-            poster = bundle.getString(Constants.intent_IMAGE);
+        if (intent != null){
+            movie = intent.getParcelableExtra("movieItem");
         }
+        fillData();
+    }
 
-        title_TV.setText(title);
-        plot_TV.setText(plot);
-        releasedate_TV.setText("Release Date: "+ FormatDate.dateTime(releasedate));
-        rating_TV.setText("Rating: "+rating);
+    @SuppressLint("SetTextI18n")
+    private void fillData() {
+        title_TV.setText(movie.getMovieTitle());
+        plot_TV.setText(movie.getMoviePlot());
+        releasedate_TV.setText("Release Date: "+ FormatDate.dateTime(movie.getMovieRelease()));
+        rating_TV.setText("Rating: "+movie.getMovieRating());
         Picasso.get()
-                .load(BASE_URL_IMAGE + poster).
+                .load(BASE_URL_IMAGE + movie.getMovieImagePoster()).
                 into(poster_IV, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
@@ -78,7 +73,7 @@ public class DetailActivity extends AppCompatActivity {
                         poster_IV.setImageResource(R.drawable.error_image_loading);
                     }
                 });
-        setTitle(title);
+        setTitle(movie.getMovieTitle());
     }
 
 }

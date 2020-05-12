@@ -30,8 +30,12 @@ public class Movie implements Parcelable {
         }
     };
 
-    public Movie() {
-
+    public Movie(String mMovieTitle, String mMovieRelease, String mMovieImagePoster,String mMoviePlot,String mMovieRating) {
+        this.movieTitle = mMovieTitle;
+        this.movieRelease = mMovieRelease;
+        this.movieImagePoster = mMovieImagePoster;
+        this.moviePlot = mMoviePlot;
+        this.movieRating = mMovieRating;
     }
 
     //For Movie Title

@@ -14,32 +14,36 @@ import org.ocpsoft.prettytime.PrettyTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public final class MovieJsonUtils {
 
     private static final String LOG_TAG = MovieJsonUtils.class.getSimpleName();
 
-    public static Movie[] getSimpleMovieStringFromJson(String movieJsonStr) throws JSONException {
+    public static List<Movie> getSimpleMovieStringFromJson(String movieJsonStr) {
 
         if (TextUtils.isEmpty(movieJsonStr)){
             return null;
         }
-        JSONObject jsonObject = new JSONObject(movieJsonStr);
-        JSONArray jsonArray = jsonObject.getJSONArray("results");
-        Log.println(Log.INFO,LOG_TAG,String.valueOf(jsonArray));
 
-        Movie[] movieData = new Movie[jsonArray.length()];
+        List<Movie> movieData = new ArrayList<>();
+
         try {
+            JSONObject jsonObject = new JSONObject(movieJsonStr);
+            JSONArray jsonArray = jsonObject.getJSONArray("results");
+
             for (int eachMovie = 0; eachMovie < jsonArray.length(); eachMovie++){
-                Movie movie = new Movie();
-                movie.setTitle(jsonArray.getJSONObject(eachMovie).optString(Constants.movie_Title));
-                movie.setMovieRating(jsonArray.getJSONObject(eachMovie).optString(Constants.movie_Rating));
-                movie.setImagePoster(jsonArray.getJSONObject(eachMovie).getString(Constants.movie_PosterImage));
-                movie.setPlot(jsonArray.getJSONObject(eachMovie).optString(Constants.movie_Plot));
-                movie.setReleaseDate(jsonArray.getJSONObject(eachMovie).optString(Constants.movie_Release));
-                movieData[eachMovie] = movie;
+                JSONObject currentMovie = jsonArray.getJSONObject(eachMovie);
+                String title = currentMovie.optString(Constants.movie_Title);
+                String rating = currentMovie.optString(Constants.movie_Rating);
+                String image = currentMovie.getString(Constants.movie_PosterImage);
+                String plot = currentMovie.optString(Constants.movie_Plot);
+                String release = currentMovie.optString(Constants.movie_Release);
+                Movie movie = new Movie(title,release,image,plot,rating);
+                movieData.add(movie);
             }
         }catch (JSONException e){
             Log.e(LOG_TAG, "Problem parsing the JSON data", e);

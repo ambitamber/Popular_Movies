@@ -17,17 +17,19 @@ import com.example.popularmovies.R;
 import com.example.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterVieweHolder>{
 
     private static final String TAG = MovieAdapter.class.getSimpleName();
-    private Movie[] mMovieData;
+    private List<Movie> mMovieData;
     private static final String BASE_URL_IMAGE = "http://image.tmdb.org/t/p/w500";
 
 
     private final MovieAdapterOnClickHandler mClickHandler;
 
     public interface MovieAdapterOnClickHandler {
-        void onClick(String title,String plot,String releasedate,String rating,String imageposter);
+        void onClick(Movie movie);
     }
 
     public MovieAdapter( MovieAdapterOnClickHandler mClickHandler) {
@@ -36,27 +38,38 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     public class MovieAdapterVieweHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        final ImageView mMovieIV;
-        final TextView mTitleTV,mRatingTV,mReleasedateTV;
+        ImageView mMovieIV;
 
         public MovieAdapterVieweHolder(@NonNull View itemView) {
             super(itemView);
             mMovieIV = itemView.findViewById(R.id.iv_movie_picture);
-            mTitleTV = itemView.findViewById(R.id.TV_title);
-            mRatingTV = itemView.findViewById(R.id.TV_rating);
-            mReleasedateTV = itemView.findViewById(R.id.TV_releasedate);
             itemView.setOnClickListener(this);
+        }
+
+        void bind(int index){
+            Movie movie = mMovieData.get(index);
+            mMovieIV = itemView.findViewById(R.id.iv_movie_picture);
+            String imagePath = BASE_URL_IMAGE+movie.getMovieImagePoster();
+            Picasso.get()
+                    .load(imagePath)
+                    .into(mMovieIV, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            mMovieIV.setVisibility(View.VISIBLE);
+                        }
+                        @Override
+                        public void onError(Exception e) {
+                            //if there is no image on the server for current movie, it will set the imageview to error_image_loading.png
+                            mMovieIV.setImageResource(R.drawable.error_image_loading);
+                        }
+                    });
         }
 
         @Override
         public void onClick(View v) {
             int adapterPosition  = getAdapterPosition();
-            String title = mMovieData[adapterPosition].getMovieTitle();
-            String plot = mMovieData[adapterPosition].getMoviePlot();
-            String releasedate = mMovieData[adapterPosition].getMovieRelease();
-            String imageposter = mMovieData[adapterPosition].getMovieImagePoster();
-            String rating = mMovieData[adapterPosition].getMovieRating();
-            mClickHandler.onClick(title,plot,releasedate,rating,imageposter);
+            Movie movie = mMovieData.get(adapterPosition);
+            mClickHandler.onClick(movie);
         }
     }
 
@@ -74,31 +87,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     @Override
     public void onBindViewHolder(@NonNull final MovieAdapterVieweHolder holder, int position) {
         //To view Movie Title into TextView
-        final String title = mMovieData[position].getMovieTitle();
-        holder.mTitleTV.setText(title);
-        //To view Movie Rating into TextView
-        String rating = mMovieData[position].getMovieRating();
-        holder.mRatingTV.setText("Rating: " + rating);
-        String releasedate = FormatDate.dateTime(mMovieData[position].getMovieRelease());
-        holder.mReleasedateTV.setText(releasedate);
-        //To view Movie Poster into Imageview
-        final String imagePath = BASE_URL_IMAGE + mMovieData[position].getMovieImagePoster();
-        Picasso.get()
-                .load(imagePath)
-                .into(holder.mMovieIV, new com.squareup.picasso.Callback() {
-                    @Override
-                    public void onSuccess() {
-                        holder.mMovieIV.setVisibility(View.VISIBLE);
-                        Log.i(TAG,"Image Path: "+ imagePath);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        //if there is no image on the server for current movie, it will set the imageview to error_image_loading.png
-                        holder.mMovieIV.setImageResource(R.drawable.error_image_loading);
-                        Log.e(TAG, title+": There is Image Poster for this Movie.",e);
-                    }
-                });
+      holder.bind(position);
     }
 
     @Override
@@ -106,10 +95,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         if (null == mMovieData){
             return 0;
         }
-       return mMovieData.length;
+       return mMovieData.size();
     }
 
-    public void setmMovieData(Movie[] movieData) {
+    public void setmMovieData(List<Movie> movieData) {
         mMovieData = movieData;
         notifyDataSetChanged();
     }

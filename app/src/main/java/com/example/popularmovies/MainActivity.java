@@ -24,7 +24,12 @@ import com.example.popularmovies.utilities.Constants;
 import com.example.popularmovies.utilities.MovieJsonUtils;
 import com.example.popularmovies.utilities.NetworkUtils;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mMovieAdapter;
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
-    private Movie[] mMovie = null;
+    private ArrayList<Movie> mMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +48,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mMovieAdapter = new MovieAdapter(this);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
-        //Charged to GridLayoutManager
-        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
 
+        //GridLayoutManager
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
@@ -55,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
     private void loadMovieData(String word) {
         showMovieDataView();
-        new FetchMovieTask().execute(word);
+        URL query = NetworkUtils.buildUrl(word);
+        new FetchMovieTask().execute(query);
     }
 
     private void showMovieDataView() {
@@ -75,20 +80,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onClick(String title,String plot,String releasedate,String rating,String imageposter) {
+    public void onClick(Movie i) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(Constants.intent_TITLE, title);
-        intent.putExtra(Constants.intent_Rating,rating);
-        intent.putExtra(Constants.intent_IMAGE,imageposter);
-        intent.putExtra(Constants.intent_PLOT,plot);
-        intent.putExtra(Constants.intent_RELEASEDATE,releasedate);
+        intent.putExtra("movieItem",i);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        Toast.makeText(this,title,Toast.LENGTH_SHORT).show();
     }
 
 
     @SuppressLint("StaticFieldLeak")
-    public class FetchMovieTask extends AsyncTask<String,Void,Movie[]>{
+    public class FetchMovieTask extends AsyncTask<URL,Void,String>{
 
         @Override
         protected void onPreExecute() {
@@ -97,30 +97,29 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
 
         @Override
-        protected Movie[] doInBackground(String... strings) {
+        protected String doInBackground(URL... strings) {
 
             if (strings.length == 0){
                 return null;
             }
-            String query = strings[0];
-            URL movieRequestUrl = NetworkUtils.buildUrl(query);
+            URL query = strings[0];
+            String searchResults = null;
 
             try {
-                String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
-                Movie[] simpleJsonWeatherData = MovieJsonUtils.getSimpleMovieStringFromJson(jsonMovieResponse);
-                return simpleJsonWeatherData;
-            } catch (Exception e) {
+                searchResults = NetworkUtils.getResponseFromHttpUrl(query);
+            } catch (IOException e) {
                 e.printStackTrace();
-                return null;
             }
+            return searchResults;
         }
 
         @Override
-        protected void onPostExecute(Movie[] movies) {
+        protected void onPostExecute(String movies) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
-            if (movies != null) {
+            if (movies != null  && !movies.equals("")) {
                 showMovieDataView();
-                mMovieAdapter.setmMovieData(movies);
+                mMovie = (ArrayList<Movie>) MovieJsonUtils.getSimpleMovieStringFromJson(movies);
+                mMovieAdapter.setmMovieData(mMovie);
             } else {
                 showErrorMessage();
             }
