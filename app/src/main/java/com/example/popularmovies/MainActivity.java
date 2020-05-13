@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
         //GridLayoutManager
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,screenSize()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
 
@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
 
         getViewModel();
+    }
+
+    private int screenSize() {
+        return 2;
     }
 
     private void showMovieDataView() {
