@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
     private int screenSize() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        if ()
         return 2;
     }
 
