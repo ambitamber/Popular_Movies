@@ -61,11 +61,13 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
     public class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView listTrailerItemView;
+        TextView trailerName, trailerSite, trailerType;
 
         public TrailerViewHolder(@NonNull View itemView) {
             super(itemView);
-            listTrailerItemView = itemView.findViewById(R.id.tv_trailer_item);
+            trailerName = itemView.findViewById(R.id.TV_trailerName);
+            trailerSite = itemView.findViewById(R.id.TV_trailerSite);
+            trailerType = itemView.findViewById(R.id.TV_trailerType);
             itemView.setOnClickListener(this);
         }
 
@@ -75,7 +77,9 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
             listItemClickListener.onClick(trailers.get(position));
         }
         void bind(int position){
-            listTrailerItemView.setText(trailers.get(position).getName());
+            trailerName.setText(trailers.get(position).getName());
+            trailerSite.setText(trailers.get(position).getSite());
+            trailerType.setText(trailers.get(position).getType());
         }
     }
 }

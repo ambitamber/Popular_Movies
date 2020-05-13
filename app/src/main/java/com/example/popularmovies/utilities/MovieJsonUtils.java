@@ -88,7 +88,8 @@ public final class MovieJsonUtils {
                 trailer = new Trailer(
                         movieJson.optString("name","Not Available"),
                         movieJson.optString("site","Not Available"),
-                        movieJson.optString("key","Not Available")
+                        movieJson.optString("key","Not Available"),
+                        movieJson.optString("type","Not Available")
                 );
                 trailers.add(trailer);
             }

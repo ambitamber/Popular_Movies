@@ -1,6 +1,7 @@
 package com.example.popularmovies;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,10 +92,13 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         }
 
         //RecyclerView for Movie Trailer
-        recyclerView = findViewById(R.id.detail_RecyclerView);
+        recyclerView = findViewById(R.id.trailer_RecyclerView);
         mTrailerAdapter = new TrailerAdapter(this,trailers,this);
         recyclerView.setAdapter(mTrailerAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         //Favorite Movie
         favButton = findViewById(R.id.favButton_IV);
@@ -140,7 +144,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
 
     private void getMoreDetails(String id) {
         String reviewQuery = id + File.separator + "reviews";
-        String trailerQuery = id + File.separator + "videos";
+        String trailerQuery = id + File.separator +  "videos";
 
         SearchURLs searchURLs = new SearchURLs(
                 NetworkUtils.buildUrl(reviewQuery),
@@ -148,6 +152,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         );
         new ReviewsQueryTask().execute(searchURLs);
     }
+    @SuppressLint("StaticFieldLeak")
     private class ReviewsQueryTask extends AsyncTask<SearchURLs,Void,ResultsStrings> {
 
         @Override
@@ -169,8 +174,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            ResultsStrings results = new ResultsStrings(reviewResults,trailerResults);
-            return results;
+            return new ResultsStrings(reviewResults,trailerResults);
         }
 
         @Override

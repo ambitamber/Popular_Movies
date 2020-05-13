@@ -1,8 +1,5 @@
 package com.example.popularmovies.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 public class Movie implements Serializable {
@@ -12,16 +9,6 @@ public class Movie implements Serializable {
     private String movieImagePoster;
     private String moviePlot;
     private String movieRating;
-
-    public Movie(Parcel in) {
-        movieTitle = in.readString();
-        movieRelease = in.readString();
-        movieImagePoster = in.readString();
-        moviePlot = in.readString();
-        movieRating = in.readString();
-        movieID = in.readString();
-    }
-
 
 
     public Movie(String Id,String mMovieTitle, String mMovieRelease, String mMovieImagePoster,String mMoviePlot,String mMovieRating) {

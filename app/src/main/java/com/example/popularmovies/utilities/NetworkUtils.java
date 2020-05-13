@@ -17,7 +17,7 @@ public final class NetworkUtils {
     public static URL buildUrl(String movieURL) {
         Uri builtUri = Uri.parse(Constants.STATIC_MOIVES_URL)
                 .buildUpon()
-                .appendPath(movieURL)
+                .appendEncodedPath(movieURL)
                 .appendQueryParameter(Constants.MOVIE_API_KEY, Constants.API_KEY)
                 .appendQueryParameter(Constants.MOVIE_LANGUAGE,Constants.LANGUAGE)
                 .build();

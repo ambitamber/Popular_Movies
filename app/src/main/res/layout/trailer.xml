@@ -1,18 +1,45 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center" >
+    android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/tv_trailer_item"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="0dp"
-        android:text="Trailer"
-        android:textColor="@color/colorPrimary"
-        android:paddingRight="0dp"
-        android:paddingLeft="8dp" />
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/TV_trailerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:text="Trailer"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/TV_trailerSite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:text="Site"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/TV_trailerType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:text="Type"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
 </FrameLayout>

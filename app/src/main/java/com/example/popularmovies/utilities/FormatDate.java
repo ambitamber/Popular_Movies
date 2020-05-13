@@ -9,7 +9,7 @@ import java.util.Date;
 public class FormatDate {
     public static String dateTime(String movieDate) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat inSDF = new SimpleDateFormat("yyyy-mm-dd");
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat outSDF = new SimpleDateFormat("mm/dd/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat outSDF = new SimpleDateFormat("mm/yyyy");
         String outDate = "";
         if (movieDate != null) {
             try {
