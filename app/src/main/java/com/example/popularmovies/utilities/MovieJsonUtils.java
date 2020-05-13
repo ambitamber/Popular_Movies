@@ -38,7 +38,7 @@ public final class MovieJsonUtils {
                 String image = currentMovie.getString(Constants.movie_PosterImage);
                 String plot = currentMovie.optString(Constants.movie_Plot);
                 String release = currentMovie.optString(Constants.movie_Release);
-                Movie movie = new Movie(id,title,release,rating,plot,image);
+                Movie movie = new Movie(id,title,release,image,plot,rating);
                 movieData.add(movie);
             }
         }catch (JSONException e){

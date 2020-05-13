@@ -14,6 +14,7 @@ public class FavoriteMovie {
     private String image;
 
 
+    public FavoriteMovie(){}
 
 
     public FavoriteMovie(int id, String title, String releaseDate, String rating, String plot, String image) {
