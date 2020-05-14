@@ -54,8 +54,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
     TextView releasedate_TV;
     @BindView(R.id.movieRating_TV)
     TextView rating_TV;
-    @BindView(R.id.ratingBar)
-    RatingBar ratingBar;
 
     private Movie movie;
     private ArrayList<Review> reviews;
@@ -82,7 +80,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         plot_TV = findViewById(R.id.moviePlot_TV);
         releasedate_TV = findViewById(R.id.movieReleasedate_TV);
         rating_TV = findViewById(R.id.movieRating_TV);
-        ratingBar = findViewById(R.id.ratingBar);
 
         Intent intent = getIntent();
         if (intent == null){
@@ -217,7 +214,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         plot_TV.setText(movie.getPlot());
         releasedate_TV.setText("Release Date: "+ FormatDate.dateTime(movie.getReleaseDate()));
         rating_TV.setText("Rating: "+movie.getRating());
-        ratingBar.setRating(Float.parseFloat(movie.getRating()));
 
         Picasso.get()
                 .load(BASE_URL_IMAGE + movie.getImage()).
@@ -264,15 +260,14 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         });
         mTrailerAdapter.setTrailerData(trailers);
 
-        TextView review_TV = findViewById(R.id.review_TV);
+        TextView review_TV = findViewById(R.id.tv_reviews);
         review_TV.setText("");
         for (int i = 0; i < reviews.size(); i++){
-            review_TV.append("\n");
-            review_TV.append(reviews.get(i).getContent());
-            review_TV.append("\n\n");
-            review_TV.append(" - Reviewed by ");
-            review_TV.append(reviews.get(i).getAuthor());
-            review_TV.append("\n\n---------------\n");
+            review_TV.append("\n"+
+                    reviews.get(i).getContent() +
+                    "\n\n" +" - Reviewed by " +
+                    reviews.get(i).getAuthor()+
+                    "\n\n---------------\n");
         }
     }
 }
