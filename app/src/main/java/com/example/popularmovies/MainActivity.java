@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView = findViewById(R.id.recyclerview_movie);
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mMovieAdapter = new MovieAdapter(this,this,mMovie);
-
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
         //GridLayoutManager
@@ -63,15 +64,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         favMovs = new ArrayList<>();
 
-
         getViewModel();
     }
 
     private int screenSize() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        if ()
-        return 2;
+        Display display = this.getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float density  = getResources().getDisplayMetrics().density;
+        float dpWidth  = outMetrics.widthPixels / density;
+        int size = Math.round(dpWidth/200);
+        Log.e("MainActivity", "Screen Size: "+String.valueOf(size));
+        return size;
     }
 
     private void showMovieDataView() {
@@ -88,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(Movie i) {
@@ -96,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         intent.putExtra("movieItem",i);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
-
 
     @SuppressLint("StaticFieldLeak")
     public class FetchMovieTask extends AsyncTask<URL,Void,String>{
@@ -188,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -211,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             searchQuery();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
