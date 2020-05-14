@@ -10,10 +10,18 @@
     android:orientation="vertical"
     tools:context=".DetailActivity">
 
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="234dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/favButton_IV"
+        app:layout_constraintTop_toBottomOf="@+id/favButton_IV" />
+
     <ImageView
         android:id="@+id/moviePoster_IV"
-        android:layout_width="190dp"
-        android:layout_height="300dp"
+        android:layout_width="161dp"
+        android:layout_height="255dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
@@ -65,17 +73,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/moviePoster_IV" />
 
-    <TextView
-        android:id="@+id/tv_trailers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="Trialers"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        tools:ignore="MissingConstraints" />
-
     <ImageView
         android:id="@+id/favButton_IV"
         android:layout_width="wrap_content"
@@ -88,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/movieRating_TV" />
 
     <TextView
-        android:id="@+id/Trailers_TV"
+        android:id="@+id/trailers_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -102,14 +99,44 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trailer_RecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="361dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Trailers_TV" />
+        app:layout_constraintTop_toBottomOf="@+id/trailers_TV" />
+
+    <TextView
+        android:id="@+id/review_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Reviews"
+        app:layout_constraintStart_toStartOf="@+id/trailer_RecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/trailer_RecyclerView" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trailer_RecyclerView" />
+
+    <TextView
+        android:id="@+id/tv_reviews"
+        style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_TV" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

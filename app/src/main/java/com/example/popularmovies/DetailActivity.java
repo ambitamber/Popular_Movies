@@ -13,7 +13,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
     TextView releasedate_TV;
     @BindView(R.id.movieRating_TV)
     TextView rating_TV;
+    @BindView(R.id.ratingBar)
+    RatingBar ratingBar;
 
     private Movie movie;
     private ArrayList<Review> reviews;
@@ -60,7 +64,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
     //For Trailers
     private RecyclerView recyclerView;
     private TrailerAdapter mTrailerAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     //For Favorite movies
     private MovieDb movieDb;
@@ -79,6 +82,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         plot_TV = findViewById(R.id.moviePlot_TV);
         releasedate_TV = findViewById(R.id.movieReleasedate_TV);
         rating_TV = findViewById(R.id.movieRating_TV);
+        ratingBar = findViewById(R.id.ratingBar);
 
         Intent intent = getIntent();
         if (intent == null){
@@ -213,6 +217,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         plot_TV.setText(movie.getPlot());
         releasedate_TV.setText("Release Date: "+ FormatDate.dateTime(movie.getReleaseDate()));
         rating_TV.setText("Rating: "+movie.getRating());
+        ratingBar.setRating(Float.parseFloat(movie.getRating()));
+
         Picasso.get()
                 .load(BASE_URL_IMAGE + movie.getImage()).
                 into(poster_IV, new com.squareup.picasso.Callback() {
@@ -257,5 +263,16 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
             }
         });
         mTrailerAdapter.setTrailerData(trailers);
+
+        TextView review_TV = findViewById(R.id.review_TV);
+        review_TV.setText("");
+        for (int i = 0; i < reviews.size(); i++){
+            review_TV.append("\n");
+            review_TV.append(reviews.get(i).getContent());
+            review_TV.append("\n\n");
+            review_TV.append(" - Reviewed by ");
+            review_TV.append(reviews.get(i).getAuthor());
+            review_TV.append("\n\n---------------\n");
+        }
     }
 }
