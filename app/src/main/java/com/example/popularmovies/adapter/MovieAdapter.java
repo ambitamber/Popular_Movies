@@ -49,7 +49,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         void bind(int index){
             Movie movie = mMovieData.get(index);
             mMovieIV = itemView.findViewById(R.id.iv_movie_picture);
-            String imagePath = BASE_URL_IMAGE+movie.getMovieImagePoster();
+            String imagePath = BASE_URL_IMAGE+movie.getImage();
             Picasso.get()
                     .load(imagePath)
                     .into(mMovieIV, new com.squareup.picasso.Callback() {

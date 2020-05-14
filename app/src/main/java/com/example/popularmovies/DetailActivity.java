@@ -208,13 +208,13 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
 
     @SuppressLint("SetTextI18n")
     private void fillData() {
-        setTitle(movie.getMovieTitle());
-        title_TV.setText(movie.getMovieTitle());
-        plot_TV.setText(movie.getMoviePlot());
-        releasedate_TV.setText("Release Date: "+ FormatDate.dateTime(movie.getMovieRelease()));
-        rating_TV.setText("Rating: "+movie.getMovieRating());
+        setTitle(movie.getTitle());
+        title_TV.setText(movie.getTitle());
+        plot_TV.setText(movie.getPlot());
+        releasedate_TV.setText("Release Date: "+ FormatDate.dateTime(movie.getReleaseDate()));
+        rating_TV.setText("Rating: "+movie.getRating());
         Picasso.get()
-                .load(BASE_URL_IMAGE + movie.getMovieImagePoster()).
+                .load(BASE_URL_IMAGE + movie.getImage()).
                 into(poster_IV, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
@@ -232,11 +232,11 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
             public void onClick(View v) {
                 final FavoriteMovie favoriteMovie = new FavoriteMovie(
                         Integer.parseInt(movie.getId()),
-                        movie.getMovieTitle(),
-                        movie.getMovieRelease(),
-                        movie.getMovieRating(),
-                        movie.getMoviePlot(),
-                        movie.getMovieImagePoster()
+                        movie.getTitle(),
+                        movie.getReleaseDate(),
+                        movie.getRating(),
+                        movie.getPlot(),
+                        movie.getImage()
                 );
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override

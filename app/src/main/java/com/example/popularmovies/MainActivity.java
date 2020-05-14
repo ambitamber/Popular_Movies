@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         float density  = getResources().getDisplayMetrics().density;
         float dpWidth  = outMetrics.widthPixels / density;
         int size = Math.round(dpWidth/200);
-        Log.e("MainActivity", "Screen Size: "+String.valueOf(size));
+        Log.e("MainActivity", "Screen Size: "+ size);
         return size;
     }
 

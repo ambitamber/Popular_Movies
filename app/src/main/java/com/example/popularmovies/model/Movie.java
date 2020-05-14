@@ -3,69 +3,69 @@ package com.example.popularmovies.model;
 import java.io.Serializable;
 
 public class Movie implements Serializable {
-    private String movieID;
-    private String movieTitle;
-    private String movieRelease;
-    private String movieImagePoster;
-    private String moviePlot;
-    private String movieRating;
+    private String id;
+    private String title;
+    private String releaseDate;
+    private String rating;
+    private String plot;
+    private String image;
 
 
-    public Movie(String Id,String mMovieTitle, String mMovieRelease, String mMovieImagePoster,String mMoviePlot,String mMovieRating) {
-        this.movieID = Id;
-        this.movieTitle = mMovieTitle;
-        this.movieRelease = mMovieRelease;
-        this.movieImagePoster = mMovieImagePoster;
-        this.moviePlot = mMoviePlot;
-        this.movieRating = mMovieRating;
+    public Movie(String id, String title, String releaseDate, String rating, String plot, String image) {
+        this.id = id;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.rating = rating;
+        this.plot = plot;
+        this.image = image;
     }
 
     //Movie ID
     public String getId() {
-        return movieID;
+        return id;
     }
     public void setId(String id) {
-        this.movieTitle = id;
+        this.title = id;
     }
 
     //For Movie Title
     public void setTitle(String mMovieTitle){
-        movieTitle = mMovieTitle;
+        title = mMovieTitle;
     }
-    public String getMovieTitle(){
-        return movieTitle;
+    public String getTitle(){
+        return title;
     }
 
     //For Movie Release
     public void setReleaseDate(String mMovieReleaseDate){
-        movieRelease = mMovieReleaseDate;
+        releaseDate = mMovieReleaseDate;
     }
-    public String getMovieRelease(){
-        return movieRelease;
+    public String getReleaseDate(){
+        return releaseDate;
     }
 
     //For Movie Image Poster
     public void setImagePoster(String mMovieRelease){
-        movieImagePoster = mMovieRelease;
+        image = mMovieRelease;
     }
-    public String getMovieImagePoster(){
-        return movieImagePoster;
+    public String getImage(){
+        return image;
     }
 
     //For Movie Plot
     public void setPlot(String mMoviePlot){
-        moviePlot = mMoviePlot;
+        plot = mMoviePlot;
     }
-    public String getMoviePlot(){
-        return moviePlot;
+    public String getPlot(){
+        return plot;
     }
 
     // Movie Rating
-    public void setMovieRating(String mMovieRating){
-        movieRating = mMovieRating;
+    public void setRating(String mMovieRating){
+        rating = mMovieRating;
     }
-    public String getMovieRating(){
-        return movieRating;
+    public String getRating(){
+        return rating;
     }
 
 }

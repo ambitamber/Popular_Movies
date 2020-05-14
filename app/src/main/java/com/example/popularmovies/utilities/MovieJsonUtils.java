@@ -38,7 +38,7 @@ public final class MovieJsonUtils {
                 String image = currentMovie.getString(Constants.movie_PosterImage);
                 String plot = currentMovie.optString(Constants.movie_Plot);
                 String release = currentMovie.optString(Constants.movie_Release);
-                Movie movie = new Movie(id,title,release,image,plot,rating);
+                Movie movie = new Movie(id,title,release,rating,plot,image);
                 movieData.add(movie);
             }
         }catch (JSONException e){
@@ -53,7 +53,7 @@ public final class MovieJsonUtils {
             Review review;
             JSONObject json_object = new JSONObject(reviewJsonStr);
             JSONArray resultsArray = new JSONArray(json_object.optString("results","[\"\"]"));
-            ArrayList<Review> reviewitems = new ArrayList<>();
+            ArrayList<Review> reviewList = new ArrayList<>();
 
             for (int i = 0; i < resultsArray.length(); i++) {
                 String thisitem = resultsArray.optString(i, "");
@@ -65,11 +65,11 @@ public final class MovieJsonUtils {
                         movieJson.optString("id","Not Available"),
                         movieJson.optString("url","Not Available")
                 );
-                reviewitems.add(review);
+                reviewList.add(review);
             }
-            return reviewitems;
+            return reviewList;
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, "Problem parsing the JSON data under getSimpleReviewStringFromJson: ", e);
         }
             return null;
     }
@@ -79,7 +79,7 @@ public final class MovieJsonUtils {
             Trailer trailer;
             JSONObject json_object = new JSONObject(trailerJsonStr);
             JSONArray resultsArray = new JSONArray(json_object.optString("results","[\"\"]"));
-            ArrayList<Trailer> trailers = new ArrayList<>();
+            ArrayList<Trailer> trailerList = new ArrayList<>();
             for (int i = 0; i < resultsArray.length(); i++) {
 
                 String thisitem = resultsArray.optString(i, "");
@@ -91,11 +91,11 @@ public final class MovieJsonUtils {
                         movieJson.optString("key","Not Available"),
                         movieJson.optString("type","Not Available")
                 );
-                trailers.add(trailer);
+                trailerList.add(trailer);
             }
-            return trailers;
+            return trailerList;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, "Problem parsing the JSON data under getSimpleTrailerStringFromJson: ", e);
         }
         return null;
     }
