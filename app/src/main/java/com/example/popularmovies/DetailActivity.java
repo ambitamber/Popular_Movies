@@ -213,7 +213,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         title_TV.setText(movie.getTitle());
         plot_TV.setText(movie.getPlot());
         releasedate_TV.setText("Release Date: "+ FormatDate.dateTime(movie.getReleaseDate()));
-        rating_TV.setText("Rating: "+movie.getRating());
+        rating_TV.setText("Rating: "+movie.getRating()+"/10");
 
         Picasso.get()
                 .load(BASE_URL_IMAGE + movie.getImage()).
