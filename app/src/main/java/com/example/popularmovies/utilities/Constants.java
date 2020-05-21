@@ -14,7 +14,7 @@ public class Constants {
     //For NetworkUtils
     public final static String STATIC_MOIVES_URL = "https://api.themoviedb.org/3/movie/";
     public final static String MOVIE_API_KEY = "api_key";
-    public final static String API_KEY = "b640aea96524ead852f99db7104962de";
+    public final static String API_KEY = "";
     public final static String MOVIE_LANGUAGE = "language";
     public final static String LANGUAGE = "en-us";
 
